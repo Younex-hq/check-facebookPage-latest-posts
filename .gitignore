@@ -1,6 +1,15 @@
-.env
+# Dependencies
 node_modules
+
+# Environment
+.env
+
+# Bot state
 last_post.json
+
+# Playwright browser session
 browser-data
+
+# Build output
 dist
 *.js.map
