@@ -1,4 +1,4 @@
-import cron from 'node-cron';
+
 import { scrapeLatestPosts } from './scraper/facebook';
 import { checkPostsForDiplomat } from './ai/gemini';
 import { sendTelegramMessage } from './notifier/telegram';
@@ -40,7 +40,13 @@ async function mainRun() {
         // and sends it to Telegram.
 
         // 3. Send Telegram Message
-        const sent = await sendTelegramMessage(aiSummary);
+        let finalMessage = aiSummary;
+        finalMessage += "\n\nFirst 100 letters of posts:\n";
+        posts.forEach((post, index) => {
+            finalMessage += `- Post ${index + 1}: ${post.text.substring(0, 100)}...\n`;
+        });
+
+        const sent = await sendTelegramMessage(finalMessage);
 
         // 4. Update state if sent successfully
         if (sent) {
@@ -55,11 +61,5 @@ async function mainRun() {
     }
 }
 
-// Run immediately on start (optional, useful for testing)
+// Run immediately on start (useful for external schedulers)
 mainRun();
-
-// Schedule to run every 6 hours
-console.log("Scheduling bot to run every 6 hours (0 */6 * * *)...");
-cron.schedule('0 */6 * * *', () => {
-    mainRun();
-});

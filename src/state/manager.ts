@@ -12,6 +12,9 @@ export function loadState(): BotState {
     try {
         if (fs.existsSync(STATE_FILE)) {
             const data = fs.readFileSync(STATE_FILE, 'utf-8');
+            if (data.trim() === '') {
+                return { lastPostText: null, lastChecked: null };
+            }
             return JSON.parse(data) as BotState;
         }
     } catch (e) {
