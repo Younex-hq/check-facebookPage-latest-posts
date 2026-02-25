@@ -60,11 +60,14 @@ pnpm start
 Because it exits after running, the best way to use this bot is to schedule it.
 
 **Windows (Task Scheduler):**
-A `run-bot.bat` file is included for easy scheduling.
+To run the bot silently in the background (no black window):
 1. Open Task Scheduler and create a "Basic Task".
-2. Set your trigger (e.g., "Daily", and set it to repeat every 1 hour in advanced settings).
-3. Choose "Start a program" as the action.
-4. Browse and select the `run-bot.bat` file located in this project folder.
+2. Set your trigger (e.g., every 1 hour).
+3. Choose "Start a program".
+4. Browse and select **`run-silent.vbs`** (this launches the bot without a terminal window).
+5. Click Finish.
+
+*Note: If you want to see the terminal for debugging, select `run-bot.bat` instead.*
 
 **Linux (cron):**
 ```bash
@@ -97,6 +100,6 @@ A `run-bot.bat` file is included for easy scheduling.
 ## Tech Stack
 - **Language:** TypeScript
 - **Scraping:** Playwright (`playwright`)
-- **AI:** Google Generative AI (`@google/generative-ai`)
+- **AI:** Gemini 2.5 flash lite (`@google/generative-ai`) (fast/cheap, high RPD)
 - **Notifications:** Telegram (`telegraf`)
 - **Environment config:** `dotenv`
