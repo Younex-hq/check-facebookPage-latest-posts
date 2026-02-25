@@ -1,3 +1,5 @@
+> because spending 2min a day checking a fb page is anoying to me, I spent 2 hours making a bot to do it for me.
+
 # check FB page for my Diploma
 
 A Node.js bot that monitors a specific Facebook page, extracts the latest posts using a Playwright headless browser, analyzes them using Google's Gemini AI to check if diplomas are available, and sends a summarized notification to Telegram.
@@ -55,7 +57,16 @@ pnpm start
 ```
 
 ### Scheduling
-Because it exits after running, the best way to use this bot is to schedule it. For example, using Linux `cron` to run every 30 minutes:
+Because it exits after running, the best way to use this bot is to schedule it.
+
+**Windows (Task Scheduler):**
+A `run-bot.bat` file is included for easy scheduling.
+1. Open Task Scheduler and create a "Basic Task".
+2. Set your trigger (e.g., "Daily", and set it to repeat every 1 hour in advanced settings).
+3. Choose "Start a program" as the action.
+4. Browse and select the `run-bot.bat` file located in this project folder.
+
+**Linux (cron):**
 ```bash
 */30 * * * * cd /path/to/Facebook-bot && pnpm start >> bot.log 2>&1
 ```
