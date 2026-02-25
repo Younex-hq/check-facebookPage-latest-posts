@@ -17,6 +17,16 @@ export async function scrapeLatestPosts(pageUrl: string, maxPosts: number = 5): 
 
   const page = await context.newPage();
 
+  // OPTIMIZATION: Block all heavy resources (images, fonts, media, css)
+  await page.route('**/*', (route) => {
+    const requestType = route.request().resourceType();
+    if (['image', 'stylesheet', 'font', 'media'].includes(requestType)) {
+      route.abort();
+    } else {
+      route.continue();
+    }
+  });
+
   try {
     await page.goto(pageUrl, { waitUntil: 'domcontentloaded', timeout: 60000 });
     await page.waitForTimeout(3000);
@@ -46,7 +56,7 @@ export async function scrapeLatestPosts(pageUrl: string, maxPosts: number = 5): 
     // Scroll down to load more posts
     for (let i = 0; i < 5; i++) {
       await page.keyboard.press('PageDown');
-      await page.waitForTimeout(2000);
+      await page.waitForTimeout(1000);
     }
 
     // Use page.evaluate with the exact same logic as the user's working browser script

@@ -41,7 +41,7 @@ async function mainRun() {
 
         // 3. Send Telegram Message
         let finalMessage = aiSummary;
-        finalMessage += "\n\nLatest 5 posts:\n";
+        finalMessage += "\n\nLatest posts:\n";
         posts.forEach((post, index) => {
             finalMessage += `- Post ${index + 1}:\n${post.text.substring(0, 100)}...\n`;
         });

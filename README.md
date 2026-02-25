@@ -1,8 +1,8 @@
-# Facebook Page Monitor Bot 🤖📚
+# check FB page for my Diploma
 
 A Node.js bot that monitors a specific Facebook page, extracts the latest posts using a Playwright headless browser, analyzes them using Google's Gemini AI to check if diplomas are available, and sends a summarized notification to Telegram.
 
-## 🌟 Features
+## Features
 
 - **Automated Scraping:** Uses Playwright to bypass login walls by automatically closing popups and loading posts from the target Facebook page.
 - **AI Analysis:** Sends the latest 5 posts to the Gemini AI API (truncated to minimize token usage) to accurately determine if the posts mention diplomas being ready or available.
@@ -10,7 +10,7 @@ A Node.js bot that monitors a specific Facebook page, extracts the latest posts 
 - **State Management:** Keeps track of the last processed post in a local JSON file (`last_post.json`) to prevent duplicate notifications during subsequent runs.
 - **Single Execution Design:** Designed to run once per execution (`npm start`), making it perfect for external schedulers like cron, Windows Task Scheduler, or PM2 without keeping a Node process constantly alive.
 
-## ⚡ Prerequisites
+## Prerequisites
 
 To run this bot, you will need:
 - [Node.js](https://nodejs.org/) (v16+)
@@ -19,7 +19,7 @@ To run this bot, you will need:
 - A Telegram Bot Token
 - A Telegram Chat ID
 
-## 🚀 Installation & Setup
+## Installation & Setup
 
 1. **Clone or download the repository.**
 
@@ -42,12 +42,15 @@ To run this bot, you will need:
    TELEGRAM_CHAT_ID="your_telegram_chat_id"
    ```
 
-## 🛠️ Usage
+## Usage
 
 This bot is designed to be run as a script. Every time it is executed, it checks the page, analyzes the posts, sends a notification (if the posts are new), and then exits.
 
 ```bash
-# Run the bot
+# Compile the TypeScript code (1st time & when updating the code)
+pnpm run build
+
+# Run the compiled bot
 pnpm start
 ```
 
@@ -57,7 +60,7 @@ Because it exits after running, the best way to use this bot is to schedule it. 
 */30 * * * * cd /path/to/Facebook-bot && pnpm start >> bot.log 2>&1
 ```
 
-## 🧠 How it Works
+## How it Works
 
 1. **Scraping (`src/scraper/facebook.ts`):** 
    - Launches a headless Chromium browser.
@@ -80,7 +83,7 @@ Because it exits after running, the best way to use this bot is to schedule it. 
    - The first post's text is saved to `last_post.json`.
    - On the next run, the newly scraped first post is compared to the saved text. If they are identical, the bot exits silently.
 
-## 🧰 Tech Stack
+## Tech Stack
 - **Language:** TypeScript
 - **Scraping:** Playwright (`playwright`)
 - **AI:** Google Generative AI (`@google/generative-ai`)
