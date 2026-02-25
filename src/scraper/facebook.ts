@@ -20,7 +20,7 @@ export async function scrapeLatestPosts(pageUrl: string, maxPosts: number = 5): 
   // OPTIMIZATION: Block all heavy resources (images, fonts, media, css)
   await page.route('**/*', (route) => {
     const requestType = route.request().resourceType();
-    if (['image', 'stylesheet', 'font', 'media'].includes(requestType)) {
+    if (['image', 'font', 'media'].includes(requestType)) { // if stylesheets not loaded we get a problem with number of posts !! 
       route.abort();
     } else {
       route.continue();
@@ -58,6 +58,20 @@ export async function scrapeLatestPosts(pageUrl: string, maxPosts: number = 5): 
       await page.keyboard.press('PageDown');
       await page.waitForTimeout(1000);
     }
+
+    /* // scroll by pixels
+    for (let i = 0; i < 10; i++) {
+      await page.evaluate(() => window.scrollBy(0, 1000));
+      await page.waitForTimeout(1500);
+
+      // Early exit if we already have enough posts
+      const count = await page.locator('div[data-ad-comet-preview="message"]').count();
+      if (count >= maxPosts) {
+        console.log(`Loaded ${count} posts after ${i + 1} scrolls.`);
+        break;
+      }
+    }
+    */
 
     // Use page.evaluate with the exact same logic as the user's working browser script
     const extractedPosts = await page.evaluate((max: number) => {

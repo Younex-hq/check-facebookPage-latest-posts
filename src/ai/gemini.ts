@@ -12,7 +12,7 @@ export async function checkPostsForDiplomat(posts: FacebookPost[]): Promise<stri
     }
 
     try {
-        const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" }); // Use a fast and cost-effective model
+        const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash-lite" }); // Use a fast and cost-effective model
 
         // Prepare the posts text
         let combinedPosts = "";
