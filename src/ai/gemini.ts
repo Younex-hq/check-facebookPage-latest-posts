@@ -17,22 +17,22 @@ export async function checkPostsForDiplomat(posts: FacebookPost[]): Promise<stri
         // Prepare the posts text
         let combinedPosts = "";
         posts.forEach((p, idx) => {
-            combinedPosts += `POST ${idx + 1}:\n${p.text}\n---\n`;
+            combinedPosts += `POST ${idx + 1}:\n${p.text.substring(0, 300)}\n---\n`;
         });
 
         // The user's requested output format is very strict
         const prompt = `
 You are an AI assistant that monitors a Facebook page for an institute.
-Your job is to read the latest posts and determine if they talk about "diplomat" or "graduation" (or anything related to getting a diplomat/diploma).
+Your job is to read the latest posts and determine if they talk about if diplomas are available or ready to be taken.
 
 The user wants the output to strictly match this format:
-"diplomat: [Yes/No], sumury : the latest posts talk about ..."
+"Diploma Ready: [Yes✅/No❌]"
 
 Here are the latest posts:
 ${combinedPosts}
 
 Analyze these posts and output the result EXACTLY following the requested format. Do not add any conversational text before or after the required text format.
-If Yes, mention which post numbers talk about it in the summary.
+If Yes, mention which post numbers talk about it under the message.
         `;
 
         const result = await model.generateContent(prompt);

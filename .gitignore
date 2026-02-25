@@ -1,3 +1,6 @@
 .env
 node_modules
 last_post.json
+browser-data
+dist
+*.js.map

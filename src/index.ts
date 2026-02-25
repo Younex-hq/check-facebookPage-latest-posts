@@ -11,7 +11,7 @@ async function mainRun() {
 
     try {
         // 1. Scrape latest posts
-        const posts = await scrapeLatestPosts(TARGET_PAGE, 3);
+        const posts = await scrapeLatestPosts(TARGET_PAGE, 5);
 
         if (posts.length === 0) {
             console.log("No posts gathered or page scraping failed.");
@@ -41,9 +41,9 @@ async function mainRun() {
 
         // 3. Send Telegram Message
         let finalMessage = aiSummary;
-        finalMessage += "\n\nFirst 100 letters of posts:\n";
+        finalMessage += "\n\nLatest 5 posts:\n";
         posts.forEach((post, index) => {
-            finalMessage += `- Post ${index + 1}: ${post.text.substring(0, 100)}...\n`;
+            finalMessage += `- Post ${index + 1}:\n${post.text.substring(0, 100)}...\n`;
         });
 
         const sent = await sendTelegramMessage(finalMessage);
